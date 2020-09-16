@@ -6,8 +6,13 @@ const url = "mongodb+srv://m001-student:8FVGTLPp6xBplNdw@sandbox.pzv6n.mongodb.n
 
 const bodyParser = require('body-parser');
 const { MongoClient } = require('mongodb');
+const cors=require('cors')
 
 app.use(bodyParser.json())
+
+app.use(cors({
+    origin:""
+}))
 
 var students =[];
 var mentors =[];
@@ -153,6 +158,6 @@ app.get('/mentor/:id',async function(req,res){
 })
 
 
-app.listen(3030,function(){
+app.listen(process.env.PORT||3030,function(){
     console.log('server started');
 })
