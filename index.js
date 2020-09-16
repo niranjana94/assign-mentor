@@ -158,6 +158,6 @@ app.get('/mentor/:id',async function(req,res){
 })
 
 
-app.listen(process.env.PORT||3030,function(){
+app.listen(process.env.PORT || 3030,function(){
     console.log('server started');
 })
