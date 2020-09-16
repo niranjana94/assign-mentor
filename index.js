@@ -11,12 +11,15 @@ const cors=require('cors')
 app.use(bodyParser.json())
 
 app.use(cors({
-    origin:""
+    origin:"http://127.0.0.1:5500"
 }))
 
 var students =[];
 var mentors =[];
 
+app.get("/", async function (req, res) {
+    res.json("Hello World");
+});
 
 app.get('/students',async function(req,res){
     try {
