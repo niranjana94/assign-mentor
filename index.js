@@ -60,7 +60,7 @@ app.put('/student/:id',async function(req,res){
         let client = await MongoClient.connect(url);
         let db = client.db('mentorstudentdetails');       
                 
-        await db.collection('students').findOneAndUpdate({_id:mongodb.ObjectID(req.params.id)},{mentorid:req.body.mentorid});
+        await db.collection('students').findOneAndUpdate({_id:mongodb.ObjectID(req.params.id)},{$set:{mentorid:req.body.mentorid}});
                  
         client.close();
         res.json();
