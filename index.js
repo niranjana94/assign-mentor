@@ -42,7 +42,7 @@ app.post('/student',async function(req,res){
     try {
         let client = await MongoClient.connect(url);
         let db = client.db('mentorstudentdetails');
-        let insertedstudent = await db.collection('students').insertOne({name:req.body.name,mentorid:req.body.mentorid});
+        let insertedstudent = await db.collection('students').insertOne({name:req.body.name,mentorid:req.body.mentorid?req.body.mentorid:null});
         //console.log(insertedstudent.insertedId);
         client.close();
         res.json({id:insertedstudent.insertedId,
@@ -132,19 +132,16 @@ app.get('/mentor/:id',async function(req,res){
     try {
         let client = await MongoClient.connect(url);
         let db = client.db('mentorstudentdetails');
-        /*let mentors_student = await db.mentors.find(
-            {$or: [
-                {_id:mongodb.ObjectID(req.params.id)},{ 'studentid':{$exists: true, $ne: null }}
-             ]} ).toArray();*/
        
-        //console.log(insertedstudent.insertedId);
         var result=[];
         let mentors = await db.collection('mentors').findOne({_id:mongodb.ObjectID(req.params.id)});   
-       // console.log(mentors["studentid"])  ;
-        for(let i of mentors["studentid"])
+       // console.log(mentors["studentid"][0])  ;
+        for(let i of mentors["studentid"][0])
         {
-            //console.log(i)
-            let val= await db.collection('students').findOne(mongodb.ObjectID(i));
+           // console.log(i)
+            let val= await db.collection('students').findOne({_id:mongodb.ObjectID(i)});
+           // console.log(val);
+           if(val)
             result.push(val["name"]);
         }      
        
